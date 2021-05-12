@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.dsvendas.dto.SaleDTO;
+import com.devsuperior.dsvendas.dto.SaleSuccessDTO;
+import com.devsuperior.dsvendas.dto.SaleSumDTO;
 import com.devsuperior.dsvendas.entities.Sale;
 import com.devsuperior.dsvendas.repositories.SaleRepository;
 import com.devsuperior.dsvendas.repositories.SellerRepository;
@@ -22,6 +25,7 @@ public class SaleService {
 	@Autowired
 	private SellerRepository sellerRepository;
 	
+	@Transactional(readOnly = true)
 	public Page<SaleDTO> findAll(Pageable pageable) {
 		// Feito desta forma porque estava fazendo a consulta 5 vezes no banco
 		// devido ter 5 vendedores cadastrado. desta forma o JPA ira buscar uma vez so e guardar em memoria.		
@@ -29,6 +33,16 @@ public class SaleService {
 
 		Page<Sale> result = saleRepository.findAll(pageable);
 		return result.map(x -> new SaleDTO(x));
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaleSumDTO> amountGroupedBySeller() {
+		return saleRepository.amountGroupedBySeller();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaleSuccessDTO> successGroupedBySeller() {
+		return saleRepository.successGroupedBySeller();
 	}
 
 }
