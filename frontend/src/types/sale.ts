@@ -1,5 +1,3 @@
-import { BindOptions } from "dgram";
-import { type } from "os";
 import { Seller } from "./seller";
 
 export type Sale = {

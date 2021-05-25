@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "components/NavBar";
 import BarChart from "components/BarChart";
-import DataTable from "components/DataTable";
+import DataTable from "components/DataTable/DashBoard";
 import DonutChart from "components/DonutChart";
 import Footer from "components/Footer";
 

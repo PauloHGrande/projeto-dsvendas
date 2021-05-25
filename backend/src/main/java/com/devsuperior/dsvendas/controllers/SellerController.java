@@ -1,14 +1,20 @@
 package com.devsuperior.dsvendas.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dsvendas.dto.SellerDTO;
+import com.devsuperior.dsvendas.entities.Seller;
+import com.devsuperior.dsvendas.erros.ExceptionTratados;
 import com.devsuperior.dsvendas.service.SellerService;
 
 @RestController
@@ -18,10 +24,51 @@ public class SellerController {
 	@Autowired
 	private SellerService sellerService; 
 	
+	@Autowired
+	private ExceptionTratados erroTratados;
+		
 	@GetMapping
-	public ResponseEntity<List<SellerDTO>> findAll() {
-		List<SellerDTO> list = sellerService.findAll();
+	public ResponseEntity<Page<SellerDTO>> findAll(Pageable pageable) {
+		Page<SellerDTO> list = sellerService.findAll(pageable);
 		return ResponseEntity.ok(list);
 	}
+	
+	@PostMapping("/")
+	public ResponseEntity<?> salvarVendedor(@RequestBody Seller seller) {	
+		
+		if (seller.getName().length() > 20) {
+			return erroTratados.NotFoundException("O Campo Nome não pode ter mais que 20 caracteres!", "sellers/");
+		}
+		
+		seller.setName(seller.getName());
+		
+		try {		
+			sellerService.cadastro(seller);		
+		} catch (Exception e) {
+			return erroTratados.NotFoundException("Nome já Cadatrado!", "sellers/");
+		}
+		
+		return null;
+		
+	}
+
+	@DeleteMapping("/remove/{id}")
+	public ResponseEntity<?> removerVendedor(@RequestBody @PathVariable(value = "id") Long id) {
+		
+		try {
+			sellerService.findID(id);
+		} catch (Exception e) {
+			return erroTratados.NotFoundException("Vendedor não Localizado!", "sellers/remove/{id}");
+		}
+			
+		try {		
+			sellerService.remover(id);	
+		} catch (Exception e) {
+			return erroTratados.NotFoundException("Vendedor possui vendas em seu Nome!", "sellers/remove/{id}");
+		}
+		
+		return null;
+		
+	}	
 
 }

@@ -16,6 +16,9 @@ const Home = () => {
                     <Link className="btn btn-primary btn-lg" to="/dashboard">
                         Acesso DashBoard.
                     </Link>
+                    <Link className="btn btn-primary btn-lg" to="/cadvendedor">
+                        Cad Vendedor.
+                    </Link>
                 </div>
             </div>
             <Footer />
