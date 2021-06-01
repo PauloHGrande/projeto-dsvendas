@@ -13,12 +13,6 @@ const Home = () => {
                     <p className="lead">Analise o desempenho das suas vendas por diferentes perspectivas</p>
                     <hr />
                     <p>Exibir um dashboard a partir de dados fornecidos por um back end construido com Spring Boot.</p>
-                    <Link className="btn btn-primary btn-lg" to="/dashboard">
-                        Acesso DashBoard.
-                    </Link>
-                    <Link className="btn btn-primary btn-lg" to="/cadvendedor">
-                        Cad Vendedor.
-                    </Link>
                 </div>
             </div>
             <Footer />

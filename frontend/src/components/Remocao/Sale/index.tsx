@@ -6,7 +6,7 @@ type Props = {
     id: number;
 }
 
-const RemocaoSeller = ({ onPageChange, id }: Props) => {
+const RemocaoSale = ({ onPageChange, id }: Props) => {
     return (
         <>
         <button className="button" type="submit" onClick={() => onPageChange(id)}><BiTrash /></button>
@@ -14,4 +14,4 @@ const RemocaoSeller = ({ onPageChange, id }: Props) => {
     );
 }
 
-export default RemocaoSeller;
+export default RemocaoSale;

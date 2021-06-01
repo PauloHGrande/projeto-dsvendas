@@ -1,5 +1,6 @@
 import Dashboard from "pages/Dashboard";
-import FormCadSeller from "pages/Forms/Saller/Cadastro";
+import CadSeller from "pages/Forms/Saller/Cadastro";
+import CadSales from "pages/Forms/Sales/Cadastro";
 import Home from "pages/Home";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -16,8 +17,11 @@ const Routes = () => {
                     <Dashboard />
                 </Route>   
                 <Route path="/cadvendedor">
-                    <FormCadSeller />
-                </Route>                              
+                    <CadSeller />
+                </Route>    
+                <Route path="/cadvendas">
+                    <CadSales />
+                </Route>                                           
             </Switch>
             <ToastContainer />
         </BrowserRouter>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { SellerPage } from 'types/seller';
+import { BiFirstPage, BiLastPage } from 'react-icons/bi';
 
 type Props = {
     page: SellerPage;
@@ -13,13 +14,13 @@ const Pagination = ( { page, onPageChange } : Props ) => {
             <nav>
                 <ul className="pagination">
                     <li className={`page-item ${page.first ? 'disabled' : ''} `}>
-                        <button className="page-link btn btn-primary btn-lg" onClick={() => onPageChange(page.number - 1)}>Anterior</button>
+                        <button className="button page-link btn btn-primary btn-lg" onClick={() => onPageChange(page.number - 1)}><BiFirstPage /></button>
                     </li>
                     <li className="page-item disabled">
-                        <span className="page-link btn btn-primary btn-lg">{page.number + 1}</span>
+                        <span className="button page-link btn btn-primary btn-lg">{page.number + 1}</span>
                     </li>
                     <li className={`page-item ${page.last ? 'disabled' : ''} `}>
-                        <button className="page-link btn btn-primary btn-lg" onClick={() => onPageChange(page.number + 1)}>Proxima</button>
+                        <button className="button page-link btn btn-primary btn-lg" onClick={() => onPageChange(page.number + 1)}><BiLastPage /></button>
                     </li>
                 </ul>
             </nav>

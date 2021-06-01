@@ -51,3 +51,11 @@ html, body {
     height: 36px;
     padding: 0 10px;
 }
+
+.button {
+    border: 1px solid #AAA;
+    border-radius: 8px;
+    background-color:  #fff;
+    height: 36px;
+    padding: 0 10px;
+}

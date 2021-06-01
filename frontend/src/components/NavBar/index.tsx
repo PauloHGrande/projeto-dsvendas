@@ -6,11 +6,29 @@ const NavBar = () => {
     return (
         <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-light border-bottom shadow-sm">
             <div className="container">
-                <nav className="my-2 my-md-0 mr-md-3">
-                    <Link to="/">
-                        <img src={ImgDsDark} alt="DevSuperior" width="120" />
+                <div className="row">
+                    <div className="col-md-2">
+                        <Link to="/">
+                            <img src={ImgDsDark} alt="DevSuperior" width="120" />
+                        </Link>
+                    </div>
+                    <div className="col-md-3">
+                        <Link className="btn btn-primary btn-lg" to="/cadvendedor">
+                            Cadastrar Vendedor.
                     </Link>
-                </nav>
+                    </div>
+                    <div className="col-md-3">
+                        <Link className="btn btn-primary btn-lg" to="/cadvendas">
+                            Cadastrar Vendas.
+                    </Link>
+                    </div>
+                    <div className="col-md-3">
+                        <Link className="btn btn-primary btn-lg" to="/dashboard">
+                            DashBoard.
+                    </Link>
+                    </div>
+                </div>
+
             </div>
         </div>
     );

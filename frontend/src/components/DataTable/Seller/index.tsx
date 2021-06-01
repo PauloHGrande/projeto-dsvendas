@@ -5,38 +5,29 @@ import RemocaoSeller from 'components/Remocao/Seller';
 import React, { useEffect, useState } from 'react';
 import { SellerPage } from 'types/seller';
 import { BASE_URL } from 'utils/requests';
-
-const initialValue = {
-    name: ''
-}
+import { BiMessageSquareAdd } from 'react-icons/bi';
+import { Field, Form, Formik } from 'formik';
 
 const DataTableSeller = () => {
 
     // Responsavel pela inclusão do Form. Inicio.
-    const [values, setValues] = useState(initialValue);
+    function onSubmit( values, { resetForm } ) {
 
-    function onChange(ev: { target: { name: any; value: any; }; }) {
-        const { name, value } = ev.target;
-        setValues({ ...values, [name]: value });
-    }
-
-    async function onSubmit(ev: { preventDefault: () => void; }) {
-        ev.preventDefault();
-        await axios.post(`${BASE_URL}/sellers/`, values)
+        axios.post(`${BASE_URL}/sellers/`, values)
             .then(() => {
                 toast.success("Vendedor criado com Sucesso!");
 
                 axios.get(`${BASE_URL}/sellers?page=${0}&size=20&sort=name,desc`)
-                .then(response => {
-                    SetPage(response.data);
-                })
+                    .then(response => {
+                        SetPage(response.data);
+                    })
                 setActivePage(0);
+                resetForm({});
             })
-            .catch(handleErrors);
-            
+            .catch(handleErrors);        
     }
     // Responsavel pela inclusão do Form. Fim.
-    
+
     // Responsavel pelo Grid e Paginação. Inicio.
     const [activePage, setActivePage] = useState(0);
 
@@ -90,38 +81,59 @@ const DataTableSeller = () => {
     return (
         <>
             <div className="container">
-                <h1>Cadastro de Vendedor.</h1>
-                <form onSubmit={onSubmit}>
-                    <div className="vendedor-form__group">
-                        <label htmlFor="name">Nome:</label>
-                        <input id="name" name="name" type="text" onChange={onChange} required></input>
-                    </div>
-                    <div>
-                        <button type="submit">Salvar.</button>
-                    </div>
-                </form>
+                <h1 className="text-primary py-3">Cadastro de Vendedor.</h1>
+                <Formik
+                    onSubmit={onSubmit}
+                    initialValues={{
+                        name: ''
+                    }}
+                    render={({ values }) => (
+                        <Form>
+                        <div className="row">
+                            <div className="vendedor-form__group">
+                                <label>Nome:</label>
+                                <Field name="name" type="text" />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-4"></div>
+                            <div className="col-md-4">
+                                <div className="row">
+                                    <button className="button" type="submit"><BiMessageSquareAdd /> Salvar.</button>
+                                </div>
+                            </div>
+                            <div className="col-md-4"></div>
+                        </div>
+                        </Form>
+                    )}
+                />
             </div>
+            <br></br>
             <div className="container">
-                <Pagination page={page} onPageChange={changePage} />
-                <div className="table-responsive">
-                    <table className="table table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Vendedor</th>
-                                <th>...</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {page.content?.map(item => (
-                                <tr key={item.id}>
-                                    <td>{item.id}</td>
-                                    <td>{item.name}</td>
-                                    <td><RemocaoSeller onPageChange={removeVendedor} id={item.id} /></td>
+                <div className="row">
+                    <Pagination page={page} onPageChange={changePage} />
+                </div>
+                <div className="row">
+                    <div className="table-responsive">
+                        <table className="table table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Vendedor</th>
+                                    <th></th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {page.content?.map(item => (
+                                    <tr key={item.id}>
+                                        <td>{item.id}</td>
+                                        <td>{item.name}</td>
+                                        <td><RemocaoSeller onPageChange={removeVendedor} id={item.id} /></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </>
