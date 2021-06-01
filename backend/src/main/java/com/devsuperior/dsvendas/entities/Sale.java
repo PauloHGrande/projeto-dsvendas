@@ -21,6 +21,7 @@ public class Sale {
 	private Integer deals;
 	private Double amount;
 	private LocalDate date;
+	private Long value;
 	
 	@ManyToOne
 	@JoinColumn(name = "seller_id")
@@ -30,12 +31,13 @@ public class Sale {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sale(Long id, Integer visited, Integer deals, Double amount, LocalDate date, Seller seller) {
+	public Sale(Long id, Integer visited, Integer deals, Double amount, LocalDate date, Long value, Seller seller) {
 		this.id = id;
 		this.visited = visited;
 		this.deals = deals;
 		this.amount = amount;
 		this.date = date;
+		this.value = value;
 		this.seller = seller;
 	}
 
@@ -85,6 +87,14 @@ public class Sale {
 
 	public void setSeller(Seller seller) {
 		this.seller = seller;
+	}
+
+	public Long getValue() {
+		return value;
+	}
+
+	public void setValue(Long value) {
+		this.value = value;
 	}
 	
 	

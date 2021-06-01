@@ -1,5 +1,7 @@
 package com.devsuperior.dsvendas.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsuperior.dsvendas.dto.SellerComboBoxDTO;
 import com.devsuperior.dsvendas.dto.SellerDTO;
 import com.devsuperior.dsvendas.entities.Seller;
 import com.devsuperior.dsvendas.erros.ExceptionTratados;
@@ -33,8 +36,18 @@ public class SellerController {
 		return ResponseEntity.ok(list);
 	}
 	
+	@GetMapping("/combobox")
+	public ResponseEntity<List<SellerComboBoxDTO>> ComboboxfindAll() {
+		List<SellerComboBoxDTO> list = sellerService.ComboboxfindAll();
+		return ResponseEntity.ok(list);
+	}
+	
 	@PostMapping("/")
 	public ResponseEntity<?> salvarVendedor(@RequestBody Seller seller) {	
+		
+		if (seller.getName() == "") {
+			return erroTratados.NotFoundException("O Campo Nome não pode ser nulo!", "sales/");
+		}
 		
 		if (seller.getName().length() > 20) {
 			return erroTratados.NotFoundException("O Campo Nome não pode ter mais que 20 caracteres!", "sellers/");

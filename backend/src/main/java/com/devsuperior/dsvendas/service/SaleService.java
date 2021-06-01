@@ -1,7 +1,6 @@
 package com.devsuperior.dsvendas.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,5 +43,20 @@ public class SaleService {
 	public List<SaleSuccessDTO> successGroupedBySeller() {
 		return saleRepository.successGroupedBySeller();
 	}
+	
+	@Transactional(readOnly = true)
+	public Sale findID(Long id) {
+		return saleRepository.findById(id).get();
+	}	
+	
+	@Transactional(readOnly = true)
+	public void cadastro(Sale sale) {
+		saleRepository.saveAndFlush(sale);
+	}
+	
+	//@Transactional(readOnly = true)
+	public void remover(Long id) {
+		saleRepository.deleteById(id);
+	}	
 
 }
