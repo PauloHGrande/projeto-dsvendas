@@ -41,7 +41,7 @@ public class SellerService {
 		return sellerRepository.findById(id).get();
 	}	
 	
-	@Transactional(readOnly = true)
+	//@Transactional(readOnly = true)
 	public void cadastro(Seller seller) {
 		sellerRepository.saveAndFlush(seller);
 	}

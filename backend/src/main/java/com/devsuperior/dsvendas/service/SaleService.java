@@ -49,7 +49,7 @@ public class SaleService {
 		return saleRepository.findById(id).get();
 	}	
 	
-	@Transactional(readOnly = true)
+	//@Transactional(readOnly = true)
 	public void cadastro(Sale sale) {
 		saleRepository.saveAndFlush(sale);
 	}
