@@ -66,17 +66,21 @@ public class SaleController {
 			return erroTratados.NotFoundException("Vendedor não Localizado!", "sales/");
 		}
 		
-		if (sale.getAmount() <= 0) {
+		if ((sale.getAmount() == null) || (sale.getAmount() <= 0)) {
 			return erroTratados.NotFoundException("Valor não pode ser nulo ou menor ou igual a Zero!", "sales/");
 		}
 		
-		if (sale.getVisited() <= 0 || sale.getVisited() == null) {
+		if ((sale.getVisited() == null) || (sale.getVisited() <= 0)) {
 			return erroTratados.NotFoundException("Total de Visitas não pode ser nulo ou menor ou igual a Zero!", "sales/");
 		}
 		
-		if (sale.getDeals() <= 0 || sale.getDeals() == null) {
+		if ((sale.getDeals() == null) || (sale.getDeals() <= 0)) {
 			return erroTratados.NotFoundException("Total Negocios Fechados não pode ser nulo ou menor ou igual a Zero!", "sales/");
-		}		
+		}
+		
+		if (sale.getVisited() < sale.getDeals()) {
+			return erroTratados.NotFoundException("Negocios Fechados não pode ser maior que Visitas!", "sales/");
+		}
 		
 		sale.setDate(LocalDate.now());
 		sale.setAmount(sale.getAmount());
